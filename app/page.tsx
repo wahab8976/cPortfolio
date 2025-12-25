@@ -9,7 +9,7 @@ export default async function Home() {
 
   // .lean() is vital to turn Mongoose docs into plain objects Next.js can read
   const services = await serviceSchema.find({}).lean();
-  
+
   return (
     // min-h-screen ensures the section takes up the full height
     // flex items-center centers it vertically on the page

@@ -1,23 +1,33 @@
 'use client'
 import React, { useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
-  const [active, setActive] = useState('Home')
+  const pathname = usePathname() // This detects the current URL
   const [menuOpen, setMenuOpen] = useState(false)
   const [langOpen, setLangOpen] = useState(false)
   const [language, setLanguage] = useState('English')
 
-  const menuItems = ['Home', 'About', 'Services', 'Pricing', 'Contact']
+  // Map display names to your actual routes
+  const menuItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Services', path: '/services' },
+    { name: 'Pricing', path: '/pricing' },
+    { name: 'Contact', path: '/contact' },
+  ]
+
   const languages = ['English', 'Deutsch', 'Italiano', '中文']
 
   return (
     <nav className="fixed top-0 w-full z-20 bg-neutral-900 border-b border-neutral-700">
       <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
 
-        {/* Logo */}
-        <div className="flex items-center gap-2 text-white font-semibold text-xl">
+        {/* Logo - Wrap in Link to go Home */}
+        <Link href="/" className="flex items-center gap-2 text-white font-semibold text-xl">
           <span>Flowbite</span>
-        </div>
+        </Link>
 
         {/* Right Controls */}
         <div className="flex items-center gap-2 md:order-2">
@@ -32,7 +42,7 @@ const Navbar = () => {
             </button>
 
             {langOpen && (
-              <ul className="absolute right-0 mt-2 w-36 bg-neutral-800 border border-neutral-700 rounded shadow-lg">
+              <ul className="absolute right-0 mt-2 w-36 bg-neutral-800 border border-neutral-700 rounded shadow-lg z-50">
                 {languages.map((lang) => (
                   <li key={lang}>
                     <button
@@ -55,7 +65,7 @@ const Navbar = () => {
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden text-gray-300 hover:text-white"
           >
-            ☰
+            {menuOpen ? '✕' : '☰'}
           </button>
         </div>
 
@@ -65,30 +75,29 @@ const Navbar = () => {
           ${menuOpen ? 'top-16 opacity-100' : '-top-100 opacity-0 md:opacity-100'}
           `}
         >
-          {menuItems.map((item) => (
-            <li key={item} className="text-center md:text-left">
-              <button
-                onClick={() => {
-                  setActive(item)
-                  setMenuOpen(false)
-                }}
-                className={`relative block px-4 py-3 text-sm font-medium transition-colors
-                  ${
-                    active === item
-                      ? 'text-purple-400'
-                      : 'text-gray-300 hover:text-purple-400'
-                  }
-                `}
-              >
-                {item}
+          {menuItems.map((item) => {
+            // Check if this specific link is the active one
+            const isActive = pathname === item.path
 
-                {/* Active underline */}
-                {active === item && (
-                  <span className="absolute left-0 bottom-1 w-full h-0.5 bg-purple-500 rounded"></span>
-                )}
-              </button>
-            </li>
-          ))}
+            return (
+              <li key={item.path} className="text-center md:text-left">
+                <Link
+                  href={item.path}
+                  onClick={() => setMenuOpen(false)}
+                  className={`relative block px-4 py-3 text-sm font-medium transition-colors
+                    ${isActive ? 'text-purple-400' : 'text-gray-300 hover:text-purple-400'}
+                  `}
+                >
+                  {item.name}
+
+                  {/* Active underline - now based on real URL */}
+                  {isActive && (
+                    <span className="absolute left-0 bottom-1 w-full h-0.5 bg-purple-500 rounded"></span>
+                  )}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </nav>
