@@ -1,65 +1,97 @@
+import GenreCard from "@/components/GenreCard";
 import Image from "next/image";
+import dbConnect from "@/lib/connectDB";
+import serviceSchema from "@/models/service.model";
 
-export default function Home() {
+export default async function Home() {
+
+  await dbConnect();
+
+  // .lean() is vital to turn Mongoose docs into plain objects Next.js can read
+  const services = await serviceSchema.find({}).lean();
+  
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    // min-h-screen ensures the section takes up the full height
+    // flex items-center centers it vertically on the page
+    <div className="min-h-screen flex flex-col gap-45 items-center justify-center bg-neutral-900 px-4">
+
+      {/* Container: Changed to max-w-7xl for better responsiveness */}
+      <section className="flex pt-50 flex-col md:flex-row max-w-7xl w-full justify-between items-center gap-12">
+
+        {/* Text Content */}
+        <div className="flex flex-col items-start space-y-6 md:w-1/2 animate-float">
+          <div>
+            <h1 className="text-5xl text-purple-500 font-bold leading-tight">
+              We Build Digital
+            </h1>
+            <h1 className="text-5xl text-white font-bold leading-tight">
+              Software Solutions
+            </h1>
+          </div>
+
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Transforming your visionary ideas into robust digital realities.
+            We specialize in custom software development, cloud architecture,
+            and intuitive user experiences that scale with your business growth.
           </p>
+
+          <button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-lg shadow-purple-500/20">
+            Contact Us
+          </button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Image Container */}
+        <div className="md:w-1/2 flex justify-center animate-float-delayed">
+          <img
+            src="/tech_team.svg"
+            alt="A Tech Team Image"
+            className="w-full max-w-md h-auto object-contain drop-shadow-2xl"
+          />
         </div>
-      </main>
+
+      </section>
+
+      <section className="max-w-7xl w-full">
+        <div className="flex items-center gap-4 mb-12">
+          {/* The Accent Bar */}
+          <span className="w-1.5 h-10 bg-purple-600 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.5)]"></span>
+
+          {/* The Heading */}
+          <h2 className="text-white text-4xl font-bold tracking-tight">
+            Our Expertise
+          </h2>
+        </div>
+
+
+        <div className="flex flex-wrap justify-center gap-15">
+          {services.map((service, index) => {
+            return (
+              <GenreCard
+                key={index}
+                imageURL={service.imageURL}
+                tag={service.tag}
+                title={service.title}
+                description={service.description}
+              />
+            );
+          })}
+        </div>
+
+
+      </section>
+
+      <section className="max-w-7xl w-full">
+        <div className="flex items-center gap-4 mb-12">
+          {/* The Accent Bar */}
+          <span className="w-1.5 h-10 bg-purple-600 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.5)]"></span>
+
+          {/* The Heading */}
+          <h2 className="text-white text-4xl font-bold tracking-tight">
+            Projects
+          </h2>
+        </div>
+      </section>
+
     </div>
   );
 }
