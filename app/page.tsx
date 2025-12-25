@@ -1,7 +1,7 @@
-import GenreCard from "@/components/GenreCard";
 import Image from "next/image";
 import dbConnect from "@/lib/connectDB";
 import serviceSchema from "@/models/service.model";
+import ServiceCard from "@/components/ServiceCard";
 
 export default async function Home() {
 
@@ -66,7 +66,7 @@ export default async function Home() {
         <div className="flex flex-wrap justify-center gap-15">
           {services.map((service, index) => {
             return (
-              <GenreCard
+              <ServiceCard
                 key={index}
                 imageURL={service.imageURL}
                 tag={service.tag}

@@ -1,4 +1,4 @@
-import GenreCard from "@/components/GenreCard";
+import GenreCard from "@/components/ServiceCard";
 import Image from "next/image";
 import dbConnect from "@/lib/connectDB";
 import serviceSchema from "@/models/service.model";

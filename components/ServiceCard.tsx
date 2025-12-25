@@ -1,7 +1,6 @@
 import React from 'react'
 
 // Card Props
-
 interface GenreProps {
     imageURL: string;
     title: string;
@@ -9,7 +8,7 @@ interface GenreProps {
     tag: string;
 }
 
-const GenreCard = ({ imageURL, title, description, tag }: GenreProps) => {
+const ServiceCard = ({ imageURL, title, description, tag }: GenreProps) => {
     return (
         <div className="group w-full max-w-sm overflow-hidden rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md transition-all hover:scale-[1.02] hover:bg-white/10 shadow-xl">
 
@@ -46,4 +45,4 @@ const GenreCard = ({ imageURL, title, description, tag }: GenreProps) => {
     )
 }
 
-export default GenreCard
+export default ServiceCard
