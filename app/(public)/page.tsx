@@ -1,7 +1,9 @@
+// This is the root page of the Website 
+// path = '/';
 import Image from "next/image";
 import dbConnect from "@/lib/connectDB";
 import serviceSchema from "@/models/service.model";
-import ServiceCard from "@/components/ServiceCard";
+import ServiceCard from "@/components/public/ServiceCard";
 
 export default async function Home() {
 

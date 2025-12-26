@@ -1,4 +1,3 @@
-
 import React from 'react'
 import dbConnect from '@/lib/connectDB'
 import serviceSchema from "@/models/service.model"

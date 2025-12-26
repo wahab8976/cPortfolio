@@ -2,10 +2,10 @@ import Link from 'next/link';
 import { LayoutDashboard, FolderKanban, Tags, Settings, LogOut } from 'lucide-react';
 
 const menuItems = [
-    { name: 'Dashboard', icon: <LayoutDashboard size={20} />, href: '/internal/admin/dashboard' },
-    { name: 'Projects', icon: <FolderKanban size={20} />, href: '/internal/admin//projects' },
-    { name: 'Categories', icon: <Tags size={20} />, href: '/internal/admin//categories' },
-    { name: 'Settings', icon: <Settings size={20} />, href: '/internal/admin//settings' },
+    { name: 'Dashboard', icon: <LayoutDashboard size={20} />, href: '/admin/dashboard' },
+    { name: 'Projects', icon: <FolderKanban size={20} />, href: '/admin//projects' },
+    { name: 'Categories', icon: <Tags size={20} />, href: '/admin//categories' },
+    { name: 'Settings', icon: <Settings size={20} />, href: '/admin//settings' },
 ];
 
 export default function Sidebar() {
